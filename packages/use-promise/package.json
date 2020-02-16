@@ -1,7 +1,7 @@
 {
   "name": "@desync/use-promise",
   "description": "Typescript friendlier hook to deal with async.",
-  "version": "0.1.1-canary.4",
+  "version": "0.1.1-canary.5",
   "license": "MIT",
   "homepage": "https://github.com/belgattitude/desync",
   "repository": "belgattitude/desync",
