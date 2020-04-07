@@ -24,6 +24,7 @@
     "lint": "lerna run lint --stream",
     "fix:staged": "lerna run fix:staged",
     "deduplicate": "yarn-deduplicate yarn.lock",
+    "reinstall": "lerna clean --yes && rimraf --no-glob ./yarn.lock ./node_modules && yarn install",
     "git-reset": "git reset --hard HEAD",
     "git-clean": "git clean -d -x -e node_modules -e packages -f",
     "coverage:publish": "codecov && lerna run coverage:publish -- -f coverage/clover.xml",
