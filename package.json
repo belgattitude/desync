@@ -32,9 +32,9 @@
     "deps:update": "npx npm-check-updates -u && lerna exec -- yarn deps:update"
   },
   "devDependencies": {
-    "husky": "^4.2.3",
+    "husky": "^4.2.5",
     "lerna": "^3.20.2",
-    "lint-staged": "^10.1.2",
+    "lint-staged": "^10.1.5",
     "release": "^6.1.0",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3",
