@@ -19,7 +19,7 @@ describe('usePromise', () => {
     expect(result.current.error).toBeNull();
 
     // resolved data
-    await waitForNextUpdate({ timeout: 500 });
+    await waitForNextUpdate();
 
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -48,14 +48,14 @@ describe('usePromise', () => {
     expect(result.current.error).toBeNull();
 
     // resolved data
-    await waitForNextUpdate({ timeout: 500 });
+    await waitForNextUpdate();
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(result.current.error).toBeInstanceOf(Error);
     expect(result.current.error?.message).toStrictEqual('cool');
   });
 
-  it('should reload the promise when forceReload is called', async () => {
+  it('should call the promise when forceReload is called', async () => {
     const callback = jest.fn();
     const promiseFn = async () => {
       callback();
@@ -68,14 +68,14 @@ describe('usePromise', () => {
     expect(result.current.error).toBeNull();
 
     // resolved data
-    await waitForNextUpdate({ timeout: 500 });
+    await waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(1);
 
     act(() => {
       result.current.reload();
     });
 
-    await waitForNextUpdate({ timeout: 500 });
+    await waitForNextUpdate();
     expect(callback).toHaveBeenCalledTimes(2);
   });
 });

@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useDeepCompareMemoize } from '@desync/use-deep-compare-memoize';
 
-export type QueryKey<TVariables> = TVariables;
-export type QueryFunction<TResult, TVariables extends object> = (variables: TVariables) => Promise<TResult>;
-export interface QueryOptions<TResult> {
+export type AsyncFnParams<TParams> = TParams;
+
+export type AsyncFnWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
+export type AsyncFnWithoutParams<TResult> = () => Promise<TResult>;
+export type AsyncFn<TResult, TParams extends object = {}> =
+  | AsyncFnWithParams<TResult, TParams>
+  | AsyncFnWithoutParams<TResult>;
+
+export interface UsePromiseOptions<TResult> {
   initialData?: TResult;
   /*
   manual?: boolean;
@@ -21,10 +27,12 @@ export interface QueryOptions<TResult> {
   */
 }
 
-export function usePromise<TResult, TVariables extends object>(
-  promise: QueryFunction<TResult, TVariables>,
-  params: QueryKey<TVariables>,
-  options?: QueryOptions<TResult>
+const emptyParams = {};
+
+export function usePromise<TResult, TVariables extends object = {}>(
+  promise: AsyncFn<TResult, TVariables>,
+  params: AsyncFnParams<TVariables>,
+  options?: UsePromiseOptions<TResult>
 ) {
   const immediate = true;
 
@@ -35,7 +43,7 @@ export function usePromise<TResult, TVariables extends object>(
 
   const mounted = useRef<boolean>(true);
 
-  const memoizedParams = useDeepCompareMemoize(params);
+  const memoizedParams = useDeepCompareMemoize(params ?? emptyParams);
 
   const promiseFn = useCallback(() => {
     if (mounted.current) {
@@ -44,13 +52,13 @@ export function usePromise<TResult, TVariables extends object>(
       setError(null);
     }
     return promise(params)
-      .then(response => {
+      .then((response) => {
         if (mounted.current) {
           setData(response);
           setLoading(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         if (mounted.current) {
           setError(error);
           setLoading(false);
@@ -68,7 +76,7 @@ export function usePromise<TResult, TVariables extends object>(
     return () => {
       // Loading cannot be safely determined here
       // abort should be a no-op anyway
-      //abortController.abort();
+      // abortController.abort();
       mounted.current = false;
     };
   }, [force, promiseFn, immediate]);
