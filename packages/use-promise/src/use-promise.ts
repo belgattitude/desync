@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useDeepCompareMemoize } from '@desync/use-deep-compare-memoize';
 
-export type QueryKey<TParams> = TParams;
+export type AsyncFunctionParams<TParams> = TParams;
 
 export type AsyncFunctionWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
 export type AsyncFunctionWithoutParams<TResult> = () => Promise<TResult>;
@@ -9,7 +9,7 @@ export type AsyncFunction<TResult, TParams extends object = {}> =
   | AsyncFunctionWithParams<TResult, TParams>
   | AsyncFunctionWithoutParams<TResult>;
 
-export interface QueryOptions<TResult> {
+export interface UsePromiseOptions<TResult> {
   initialData?: TResult;
   /*
   manual?: boolean;
@@ -31,8 +31,8 @@ const emptyParams = {};
 
 export function usePromise<TResult, TVariables extends object = {}>(
   promise: AsyncFunction<TResult, TVariables>,
-  params: QueryKey<TVariables>,
-  options?: QueryOptions<TResult>
+  params: AsyncFunctionParams<TVariables>,
+  options?: UsePromiseOptions<TResult>
 ) {
   const immediate = true;
 
