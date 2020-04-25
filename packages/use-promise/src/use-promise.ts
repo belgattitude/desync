@@ -76,7 +76,7 @@ export function usePromise<TResult, TVariables extends object = {}>(
     return () => {
       // Loading cannot be safely determined here
       // abort should be a no-op anyway
-      //abortController.abort();
+      // abortController.abort();
       mounted.current = false;
     };
   }, [force, promiseFn, immediate]);
