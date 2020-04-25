@@ -1,8 +1,14 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useDeepCompareMemoize } from '@desync/use-deep-compare-memoize';
 
-export type QueryKey<TVariables> = TVariables;
-export type QueryFunction<TResult, TVariables extends object> = (variables: TVariables) => Promise<TResult>;
+export type QueryKey<TParams> = TParams;
+
+export type AsyncFunctionWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
+export type AsyncFunctionWithoutParams<TResult> = () => Promise<TResult>;
+export type AsyncFunction<TResult, TParams extends object = {}> =
+  | AsyncFunctionWithParams<TResult, TParams>
+  | AsyncFunctionWithoutParams<TResult>;
+
 export interface QueryOptions<TResult> {
   initialData?: TResult;
   /*
@@ -21,8 +27,10 @@ export interface QueryOptions<TResult> {
   */
 }
 
-export function usePromise<TResult, TVariables extends object>(
-  promise: QueryFunction<TResult, TVariables>,
+const emptyParams = {};
+
+export function usePromise<TResult, TVariables extends object = {}>(
+  promise: AsyncFunction<TResult, TVariables>,
   params: QueryKey<TVariables>,
   options?: QueryOptions<TResult>
 ) {
@@ -35,7 +43,7 @@ export function usePromise<TResult, TVariables extends object>(
 
   const mounted = useRef<boolean>(true);
 
-  const memoizedParams = useDeepCompareMemoize(params);
+  const memoizedParams = useDeepCompareMemoize(params ?? emptyParams);
 
   const promiseFn = useCallback(() => {
     if (mounted.current) {
@@ -44,13 +52,13 @@ export function usePromise<TResult, TVariables extends object>(
       setError(null);
     }
     return promise(params)
-      .then(response => {
+      .then((response) => {
         if (mounted.current) {
           setData(response);
           setLoading(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         if (mounted.current) {
           setError(error);
           setLoading(false);
