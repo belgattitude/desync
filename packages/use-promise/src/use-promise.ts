@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { useDeepCompareMemoize } from '@desync/use-deep-compare-memoize';
 
-export type AsyncFunctionParams<TParams> = TParams;
+export type AsyncFnParams<TParams> = TParams;
 
-export type AsyncFunctionWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
-export type AsyncFunctionWithoutParams<TResult> = () => Promise<TResult>;
-export type AsyncFunction<TResult, TParams extends object = {}> =
-  | AsyncFunctionWithParams<TResult, TParams>
-  | AsyncFunctionWithoutParams<TResult>;
+export type AsyncFnWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
+export type AsyncFnWithoutParams<TResult> = () => Promise<TResult>;
+export type AsyncFn<TResult, TParams extends object = {}> =
+  | AsyncFnWithParams<TResult, TParams>
+  | AsyncFnWithoutParams<TResult>;
 
 export interface UsePromiseOptions<TResult> {
   initialData?: TResult;
@@ -30,8 +30,8 @@ export interface UsePromiseOptions<TResult> {
 const emptyParams = {};
 
 export function usePromise<TResult, TVariables extends object = {}>(
-  promise: AsyncFunction<TResult, TVariables>,
-  params: AsyncFunctionParams<TVariables>,
+  promise: AsyncFn<TResult, TVariables>,
+  params: AsyncFnParams<TVariables>,
   options?: UsePromiseOptions<TResult>
 ) {
   const immediate = true;
