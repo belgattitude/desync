@@ -47,6 +47,7 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HUSKY_BYPASS: true
       - name: Potentially publish stable to npm
         run: |
           if \
@@ -59,3 +60,4 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HUSKY_BYPASS: true
