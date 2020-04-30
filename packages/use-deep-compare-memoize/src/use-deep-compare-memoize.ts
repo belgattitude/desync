@@ -1,4 +1,4 @@
-import deepEqual from 'dequal';
+import { default as deepEqual } from 'dequal';
 import { useRef } from 'react';
 
 type SupportedValue = string | boolean | object | null;
