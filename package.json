@@ -33,17 +33,16 @@
   },
   "devDependencies": {
     "husky": "^4.2.5",
-    "lerna": "^3.20.2",
-    "lint-staged": "^10.1.7",
+    "lerna": "^3.22.0",
+    "lint-staged": "^10.2.7",
     "release": "^6.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.3",
     "yarn-deduplicate": "^2.0.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lerna run --concurrency 1 --stream fix:staged",
-      "pre-push": "lerna run build && lerna run typecheck && lerna run test:unit"
+      "pre-commit": "lerna run --concurrency 1 --stream fix:staged"
     }
   },
   "engines": {

@@ -3,41 +3,34 @@ import { useDeepCompareMemoize } from '@desync/use-deep-compare-memoize';
 
 export type AsyncFnParams<TParams> = TParams;
 
-export type AsyncFnWithParams<TResult, TParams extends object> = (variables: TParams) => Promise<TResult>;
+export type AsyncFnWithParams<TResult, TParams extends Record<string, unknown>> = (
+  variables: TParams
+) => Promise<TResult>;
 export type AsyncFnWithoutParams<TResult> = () => Promise<TResult>;
-export type AsyncFn<TResult, TParams extends object = {}> =
+export type AsyncFn<TResult, TParams extends Record<string, unknown> = Partial<Record<string, unknown>>> =
   | AsyncFnWithParams<TResult, TParams>
   | AsyncFnWithoutParams<TResult>;
 
 export interface UsePromiseOptions<TResult> {
   initialData?: TResult;
-  /*
-  manual?: boolean;
-  retry?: boolean | number;
-  retryDelay?: (retryAttempt: number) => number;
-  staleTime?: number;
-  cacheTime?: number;
-  refetchInterval?: false | number;
-  refetchIntervalInBackground?: boolean;
-  refetchOnWindowFocus?: boolean;
-  onError?: (err: any) => void;
-  onSuccess?: (data: TResult) => void;
-  suspense?: boolean;
-  initialData?: TResult;
-  */
 }
 
 const emptyParams = {};
 
-export function usePromise<TResult, TVariables extends object = {}>(
+export function usePromise<TResult, TVariables extends Record<string, unknown> = Partial<Record<string, unknown>>>(
   promise: AsyncFn<TResult, TVariables>,
   params: AsyncFnParams<TVariables>,
   options?: UsePromiseOptions<TResult>
-) {
+): {
+  error: Error | null;
+  isLoading: boolean;
+  data: TResult | null;
+  reload: () => void;
+} {
   const immediate = true;
 
   const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<TResult | null>(options?.initialData ?? null);
   const [force, forceUpdate] = useReducer((x: number) => x + 1, 0);
 
@@ -47,7 +40,7 @@ export function usePromise<TResult, TVariables extends object = {}>(
 
   const promiseFn = useCallback(() => {
     if (mounted.current) {
-      setLoading(true);
+      setIsLoading(true);
       setData(null);
       setError(null);
     }
@@ -55,13 +48,13 @@ export function usePromise<TResult, TVariables extends object = {}>(
       .then((response) => {
         if (mounted.current) {
           setData(response);
-          setLoading(false);
+          setIsLoading(false);
         }
       })
       .catch((error) => {
         if (mounted.current) {
           setError(error);
-          setLoading(false);
+          setIsLoading(false);
         }
       });
     // Caution: keep exhaustive deps off here
@@ -85,5 +78,5 @@ export function usePromise<TResult, TVariables extends object = {}>(
     forceUpdate();
   }, []);
 
-  return { data, isLoading: loading, error, reload };
+  return { data, isLoading, error, reload };
 }
