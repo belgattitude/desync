@@ -42,8 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lerna run --concurrency 1 --stream fix:staged",
-      "pre-push": "lerna run build && lerna run typecheck && lerna run test:unit"
+      "pre-commit": "lerna run --concurrency 1 --stream fix:staged"
     }
   },
   "engines": {
