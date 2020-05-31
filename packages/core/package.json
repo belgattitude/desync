@@ -1,7 +1,7 @@
 {
   "name": "@desync/core",
   "description": "Deal with async.",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "MIT",
   "homepage": "https://github.com/belgattitude/desync",
   "repository": "belgattitude/desync",
@@ -51,9 +51,9 @@
     ]
   },
   "dependencies": {
-    "@desync/result": "0.4.0",
-    "@desync/use-deep-compare-memoize": "0.4.0",
-    "@desync/use-promise": "0.4.0"
+    "@desync/result": "0.4.1",
+    "@desync/use-deep-compare-memoize": "0.4.1",
+    "@desync/use-promise": "0.4.1"
   },
   "peerDependencies": {
     "@types/react": "^16.8.6",
