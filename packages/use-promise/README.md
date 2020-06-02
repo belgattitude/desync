@@ -29,7 +29,6 @@ const loadUsers = async (): Promise<User[]> => {
     .json<User[]>();
 };
 
-// @ts-ignore
 const UserList: React.FC = () => {
   const { data, error, isLoading } = usePromise(loadUsers, {});
   return (
