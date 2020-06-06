@@ -34,10 +34,10 @@
   "devDependencies": {
     "husky": "^4.2.5",
     "lerna": "^3.22.0",
-    "lint-staged": "^10.2.7",
+    "lint-staged": "^10.2.9",
     "release": "^6.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^3.9.3",
+    "typescript": "^3.9.5",
     "yarn-deduplicate": "^2.0.0"
   },
   "husky": {
