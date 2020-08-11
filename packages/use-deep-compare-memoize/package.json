@@ -1,7 +1,7 @@
 {
   "name": "@desync/use-deep-compare-memoize",
   "description": "React hook for deep compare memoization",
-  "version": "0.4.2",
+  "version": "0.4.3-canary.0",
   "license": "MIT",
   "homepage": "https://github.com/belgattitude/desync",
   "repository": "belgattitude/desync",
