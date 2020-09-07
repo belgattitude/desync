@@ -1,7 +1,3 @@
-comment:
-  layout: "reach,diff,flags,tree"
-  behavior: default
-  require_changes: no
 coverage:
   status:
     patch: off
@@ -34,3 +30,8 @@ flags:
 ignore:
   - "scripts/**/*"
   - "docs/**/*"
+
+comment:
+  layout: "reach,diff,flags,tree"
+  behavior: default
+  require_changes: no
