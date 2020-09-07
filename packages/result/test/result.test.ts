@@ -13,36 +13,49 @@ describe('Result tests', () => {
     }
   }
 
-  it('should set payload.isError === true with a failed result.', () => {
-    expect(Result.fail(new Error('Error')).isError()).toBeTruthy();
+  describe('When result is created with an error', () => {
+    const errorResult = Result.fail(new Error('Not okay'));
+    it('isError() must return true', () => {
+      expect(errorResult.isError()).toBeTruthy();
+    });
+    it('the payload should contains isError=true', () => {
+      expect(errorResult.payload.isError).toBeTruthy();
+    });
+    it('unwrap() should return error message', () => {
+      expect((errorResult.unwrap() as Error).message).toStrictEqual('Not okay');
+    });
   });
 
-  it('should set payload.isError === false with a successful result.', () => {
-    expect(
-      Result.ok<User>({ username: 'Jest' }).isError()
-    ).toBeFalsy();
+  describe('When result is created with an success value', () => {
+    const result = Result.ok<User>({ username: 'Jest' });
+    it('isError() must return false', () => {
+      expect(result.isError()).toBeFalsy();
+    });
+    it('payload.isError must be false', () => {
+      expect(result.payload.isError).toBeFalsy();
+    });
+    it('unwrap() should return the value', () => {
+      expect(result.unwrap()).toStrictEqual({ username: 'Jest' });
+    });
   });
 
-  it('should always have an Error object on failure', () => {
-    const failFromError = Result.fail(new Error('from error')).payload;
+  it('payload.error should be an error even if it was given as string', () => {
     const failFromString = Result.fail('from string').payload;
-
-    expect((failFromError as any).error).toBeInstanceOf(Error);
     expect((failFromString as any).error).toBeInstanceOf(Error);
   });
 
-  it('Should allow to map over a successful result', () => {
+  it('should allow to map over a successful result', () => {
     // Arrange
     const success = Result.ok<User>({ username: 'Jest' });
     // Act
     const result = success
-      .map<string>(r => {
+      .map<string>((r) => {
         return `Username is ${r.username}`;
       })
-      .map<string[]>(r => {
+      .map<string[]>((r) => {
         return r.toLowerCase().split(' ');
       })
-      .mapErr(e => {
+      .mapErr((e) => {
         throw new Error(`This cannot happen: ${e.message}`);
       })
       .unwrap();
@@ -50,7 +63,7 @@ describe('Result tests', () => {
     expect(result).toEqual(['username', 'is', 'jest']);
   });
 
-  it('Should allow to mapErr over a failed result', () => {
+  it('should allow to mapErr over a failed result', () => {
     // Arrange
     const fail = Result.fail(new ExampleError(`I'm a failure :)`));
     // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -58,25 +71,37 @@ describe('Result tests', () => {
 
     // Act
     const result = fail
-      .map<string>(r => {
+      .map((r) => {
         throw new Error(`This cannot happen: ${r}`);
       })
-      .mapErr(e => {
+      .mapErr((e) => {
         if (e instanceof ExampleError) {
           mockCallback();
           return new Error('cool');
         }
         return e;
       })
-      .map<string>(r => {
+      .map((r) => {
         throw new Error(`This cannot happen too:  ${r}`);
       })
       .unwrap();
 
-    // Assert
     expect(mockCallback.mock.calls.length).toBe(1);
     expect(result).toBeInstanceOf(Error);
     expect((result as any).message).toEqual('cool');
     expect((result as any).name).toEqual('Error');
+  });
+
+  it('should allow to asyncMap over a successful result', async () => {
+    // Arrange
+    const success = Result.ok<User>({ username: 'Jest' });
+    // Act
+    const result = (
+      await success.asyncMap(async (r) => {
+        return `Username is ${r.username}`;
+      })
+    ).unwrap();
+    // Assert
+    expect(result).toEqual('Username is Jest');
   });
 });
