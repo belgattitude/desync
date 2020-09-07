@@ -57,8 +57,6 @@
         "fn": "it"
       }
     ],
-    "jest-formatting/padding-before-test-blocks": 2,
-    "jest-formatting/padding-before-describe-blocks": 2,
     "sonarjs/cognitive-complexity": ["error", 15],
     "sonarjs/no-useless-catch": "error",
     "sonarjs/no-identical-expressions": "warn",
