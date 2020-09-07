@@ -1,17 +1,24 @@
+comment:
+  layout: "reach,diff,flags,tree"
+  behavior: default
+  require_changes: no
 coverage:
   status:
     patch: off
     project:
       default: off
       useDeepCompareMemoize:
-        flags: useDeepCompareMemoize
-        target: 50%
+        target: 90%
+        flags:
+          - useDeepCompareMemoize
       usePromise:
-        flags: usePromise
-        target: 50%
+        target: 90%
+        flags:
+          - usePromise
       result:
-        flags: result
         target: 50%
+        flags:
+          - result
 
 flags:
   useDeepCompareMemoize:
