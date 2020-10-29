@@ -1,7 +1,7 @@
 {
   "name": "@desync/use-promise",
   "description": "Typescript friendlier hook to deal with async.",
-  "version": "1.0.0",
+  "version": "1.0.1-canary.0",
   "license": "MIT",
   "homepage": "https://github.com/belgattitude/desync",
   "repository": "belgattitude/desync",
@@ -52,7 +52,7 @@
     ]
   },
   "dependencies": {
-    "@desync/use-deep-compare-memoize": "1.0.0"
+    "@desync/use-deep-compare-memoize": "1.0.1-canary.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

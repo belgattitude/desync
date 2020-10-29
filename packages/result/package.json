@@ -1,7 +1,7 @@
 {
   "name": "@desync/result",
   "description": "Rust style result based on typescript discriminated union",
-  "version": "1.0.0",
+  "version": "1.0.1-canary.0",
   "license": "MIT",
   "homepage": "https://github.com/belgattitude/desync",
   "repository": "belgattitude/desync",
