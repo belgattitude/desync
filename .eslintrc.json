@@ -10,10 +10,10 @@
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint",
     "plugin:sonarjs/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended"
   ],
   "settings": {
     "react": {

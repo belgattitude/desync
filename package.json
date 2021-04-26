@@ -28,21 +28,18 @@
     "reinstall": "lerna clean --yes && rimraf --no-glob ./yarn.lock ./node_modules && yarn install",
     "coverage:publish": "codecov && lerna run coverage:publish -- -f coverage/clover.xml",
     "deps:check": "npx npm-check-updates && lerna exec -- yarn deps:check",
-    "deps:update": "npx npm-check-updates -u && lerna exec -- yarn deps:update"
+    "deps:update": "npx npm-check-updates -u && lerna exec -- yarn deps:update",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "husky": "^4.3.0",
-    "lerna": "^3.22.1",
-    "lint-staged": "^10.5.1",
+    "husky": "^6.0.0",
+    "lerna": "^4.0.0",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
     "release": "^6.3.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.0.5",
+    "typescript": "^4.2.4",
     "yarn-deduplicate": "^3.1.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lerna run --concurrency 1 --stream fix:staged"
-    }
   },
   "engines": {
     "node": ">=10.13",
