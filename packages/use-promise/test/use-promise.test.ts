@@ -52,6 +52,7 @@ describe('usePromise', () => {
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(result.current.error).toBeInstanceOf(Error);
+    expect(result.current.isLoading).toStrictEqual(false);
     expect(result.current.error?.message).toStrictEqual('cool');
   });
 
