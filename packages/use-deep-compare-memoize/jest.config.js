@@ -33,7 +33,7 @@ module.exports = {
     window: {},
     'ts-jest': {
       diagnostics: true,
-      tsConfig: './tsconfig.jest.json',
+      tsconfig: './tsconfig.jest.json',
     },
   },
 };
