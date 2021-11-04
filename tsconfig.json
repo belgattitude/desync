@@ -2,6 +2,7 @@
   "extends": "./tsconfig.build",
   "compilerOptions": {
     "baseUrl": ".",
+    "resolveJsonModule": true,
     "paths": {
       "@desync/use-deep-compare-memoize": ["./packages/use-deep-compare-memoize/src"],
       "@desync/use-promise": ["./packages/use-promise/src"],
