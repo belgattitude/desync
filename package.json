@@ -13,10 +13,10 @@
   "scripts": {
     "lerna": "lerna",
     "dev": "lerna run start --stream --parallel",
-    "build": "lerna run build",
+    "build": "yarn workspaces foreach -tv run build",
     "build:microbundle": "lerna run build:microbundle",
     "clean": "lerna run clean",
-    "test": "lerna run test",
+    "test": "yarn workspaces foreach -tv run test:unit",
     "test:unit:coverage": "lerna run test:unit:coverage",
     "prepublish": "lerna run build",
     "publish-canary": "lerna version prerelease --preid canary --force-publish",
@@ -24,26 +24,29 @@
     "typecheck": "lerna run typecheck --stream --parallel",
     "lint": "lerna run lint --stream",
     "fix:staged": "lerna run fix:staged",
-    "deduplicate": "yarn-deduplicate yarn.lock",
+    "check:install": "yarn dlx @yarnpkg/doctor .",
     "reinstall": "lerna clean --yes && rimraf --no-glob ./yarn.lock ./node_modules && yarn install",
     "coverage:publish": "codecov && lerna run coverage:publish -- -f coverage/clover.xml",
     "deps:check": "npx npm-check-updates && lerna exec -- yarn deps:check",
     "deps:update": "npx npm-check-updates -u && lerna exec -- yarn deps:update",
-    "prepare": "husky install"
+    "postinstall": "is-ci || husky install"
   },
   "devDependencies": {
-    "husky": "^6.0.0",
+    "husky": "^7.0.2",
+    "is-ci": "3.0.1",
     "lerna": "^4.0.0",
-    "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1",
+    "lint-staged": "^11.2.3",
+    "prettier": "^2.4.1",
     "release": "^6.3.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.2.4",
-    "yarn-deduplicate": "^3.1.0"
+    "typescript": "^4.4.4"
+  },
+  "resolutions": {
+    "typescript": "^4.4.0"
   },
   "engines": {
-    "node": ">=10.13",
-    "yarn": ">=1.19.0 <2.0.0",
+    "node": ">=12.14",
+    "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
   }
 }

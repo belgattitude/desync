@@ -6,9 +6,9 @@
 };
 
 (window as any).localStorage = {
-  getItem: (key: string) => {},
-  setItem: (key: string, value: any) => {},
-  removeItem(key: string): void {},
+  getItem: (_key: string) => {},
+  setItem: (_key: string, _value: any) => {},
+  removeItem(_key: string): void {},
 };
 
 //Object.values = () => [];
@@ -21,7 +21,7 @@ const localStorageMock = {
 
 // Because it does not work in jsdom
 (HTMLMediaElement as any).prototype.play = (): Promise<any> => {
-  return new Promise((resolve, reject) => {});
+  return new Promise((_resolve, _reject) => {});
 };
 
 (HTMLMediaElement as any).prototype.load = () => {
