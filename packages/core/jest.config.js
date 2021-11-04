@@ -12,7 +12,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
   moduleFileExtensions: ['web.js', 'js', 'web.ts', 'ts', 'web.tsx', 'tsx', 'json', 'web.jsx', 'jsx', 'node'],
   setupFiles: [`${configPath}/jest.stubs.ts`],
-  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect', `${configPath}/jest.tests.ts`],
+  setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
   //roots: ['<rootDir>/../../', '<rootDir>/../../'],
   testMatch: ['<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}', '<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}'],
   testEnvironment: 'jsdom',
