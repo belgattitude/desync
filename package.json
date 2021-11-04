@@ -13,7 +13,7 @@
   "scripts": {
     "lerna": "lerna",
     "dev": "lerna run start --stream --parallel",
-    "build": "lerna run build",
+    "build": "yarn workspaces foreach -tv run build",
     "build:microbundle": "lerna run build:microbundle",
     "clean": "lerna run clean",
     "test": "yarn workspaces foreach -tv run test:unit",
